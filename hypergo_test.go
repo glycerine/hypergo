@@ -1,10 +1,10 @@
 package hypergo
 
-import (
-	// "fmt"
-	// "log"
-	"testing"
-)
+import
+// "fmt"
+// "log"
+
+"testing"
 
 const (
 	SPACE = "profiles"
@@ -59,7 +59,15 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
-	admin.AddSpace(`space profiles
+
+	err = admin.RemoveSpace(`profiles`)
+	if err != nil {
+		if err.Error() != "Error 8777: cannot rm space: does not exist" {
+			panic(err)
+		}
+	}
+
+	err = admin.AddSpace(`space profiles
 key username
 attributes
     string name,
@@ -75,6 +83,9 @@ subspace name
 subspace height
 subspace profile_views
 `)
+	if err != nil {
+		panic(err)
+	}
 }
 
 func TestGetPutDelete(t *testing.T) {
@@ -142,9 +153,9 @@ func TestGetPutDelete(t *testing.T) {
 	obj = client.Get("profiles", KEY)
 	if obj.Err != nil {
 		hyperErr := obj.Err.(HyperError)
-		if hyperErr.returnCode != 8449 {
+		if hyperErr.ReturnCode != 8449 {
 			t.Fatal("Return code should be NOT_FOUND; instead we got: %d",
-				hyperErr.returnCode)
+				hyperErr.ReturnCode)
 		}
 	} else {
 		t.Fatal("There should be an error.")
@@ -233,7 +244,7 @@ func TestCondPut(t *testing.T) {
 		t.Fatalf("There should be a comparison failure")
 	} else {
 		hyperErr := err.(HyperError)
-		if hyperErr.returnCode != 8451 {
+		if hyperErr.ReturnCode != 8451 {
 			t.Fatalf("The failure code should be C.HYPERDEX_CLIENT_COMFAIL")
 		}
 	}

@@ -37,7 +37,7 @@ func joinByteSlices(old1, old2 []byte) []byte {
 
 // Utility functions
 func newInternalError(status C.enum_hyperdex_client_returncode, msg string) error {
-	return HyperError{returnCode: status, msg: msg}
+	return HyperError{ReturnCode: status, Msg: msg}
 }
 
 // Convenience function for generating a callback
@@ -49,7 +49,7 @@ func errChannelFailureCallback(errCh chan error) func(C.enum_hyperdex_client_ret
 }
 
 func newInternalErrorForAdmin(status C.enum_hyperdex_admin_returncode, msg string) error {
-	return HyperError{returnCode: status, msg: msg}
+	return HyperError{ReturnCode: status, Msg: msg}
 }
 
 func errChannelFailureCallbackForAdmin(errCh chan error) func(C.enum_hyperdex_admin_returncode, string) {

@@ -139,12 +139,12 @@ type adminRequest struct {
 
 // A custom error type that allows for examining HyperDex error code.
 type HyperError struct {
-	returnCode C.enum_hyperdex_client_returncode
-	msg        string
+	ReturnCode C.enum_hyperdex_client_returncode
+	Msg        string
 }
 
 func (e HyperError) Error() string {
-	return fmt.Sprintf("Error %d: %s", e.returnCode, e.msg)
+	return fmt.Sprintf("Error %d: %s", e.ReturnCode, e.Msg)
 }
 
 // Set output of log.  Simply a wrapper around log.SetOutput.
